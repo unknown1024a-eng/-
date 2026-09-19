@@ -12,9 +12,6 @@ import time
 import discord
 from discord.ext import commands
 from flask import Flask
-from googletrans import Translator
-
-translator = Translator()
 
 app = Flask('')
 
