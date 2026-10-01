@@ -2416,10 +2416,17 @@ TOKENS = [
     'MTUyNTEyNzE5NjE0NDgyODUyNg.GSkUDK.8gcKTCnRCuQtU4gF7xihGM8e1q9OoAJIetF7Is'
 ]
 
+async def run_bot_instance(token):
+    # bot 인스턴스 복제 및 독립적 연결 실행
+    instance = commands.Bot(command_prefix='!', self_bot=True, help_command=None, reconnect=True)
+    # 기존 봇의 이벤트 및 명령어 동기화
+    instance.extra_events = bot.extra_events
+    instance.all_commands = bot.all_commands
+    await instance.start(token)
+
 async def main():
-    async with asyncio.TaskGroup() as tg:
-        for token in TOKENS:
-            tg.create_task(bot.start(token))
+    tasks = [run_bot_instance(token) for token in TOKENS]
+    await asyncio.gather(*tasks)
 
 if __name__ == '__main__':
     try:
