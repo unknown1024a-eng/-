@@ -2416,13 +2416,27 @@ TOKENS = [
     'MTUyNTEyNzE5NjE0NDgyODUyNg.GSkUDK.8gcKTCnRCuQtU4gF7xihGM8e1q9OoAJIetF7Is'
 ]
 
+def create_bot():
+    b = commands.Bot(command_prefix='!', self_bot=True, help_command=None, reconnect=True)
+    b.extra_events = bot.extra_events.copy()
+    b.all_commands = bot.all_commands.copy()
+
+    @b.event
+    async def setup_hook():
+        b.loop.create_task(background_vote_task())
+        b.loop.create_task(background_근성_task())
+        b.loop.create_task(background_도배_task())
+        b.loop.create_task(background_멘션_task())
+        b.loop.create_task(background_입력_task())
+        b.loop.create_task(background_그룹_task())
+        b.loop.create_task(background_장애타_task())
+        b.loop.create_task(background_멘션타_task())
+
+    return b
+
 async def run_bot_instance(token):
-    # bot 인스턴스 복제 및 독립적 연결 실행
-    instance = commands.Bot(command_prefix='!', self_bot=True, help_command=None, reconnect=True)
-    # 기존 봇의 이벤트 및 명령어 동기화
-    instance.extra_events = bot.extra_events
-    instance.all_commands = bot.all_commands
-    await instance.start(token)
+    b = create_bot()
+    await b.start(token)
 
 async def main():
     tasks = [run_bot_instance(token) for token in TOKENS]
