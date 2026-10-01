@@ -2416,34 +2416,19 @@ TOKENS = [
     'MTUyNTEyNzE5NjE0NDgyODUyNg.GSkUDK.8gcKTCnRCuQtU4gF7xihGM8e1q9OoAJIetF7Is'
 ]
 
-def create_bot():
-    b = commands.Bot(command_prefix='!', self_bot=True, help_command=None, reconnect=True)
-    b.extra_events = bot.extra_events.copy()
-    b.all_commands = bot.all_commands.copy()
-
-    @b.event
-    async def setup_hook():
-        b.loop.create_task(background_vote_task())
-        b.loop.create_task(background_근성_task())
-        b.loop.create_task(background_도배_task())
-        b.loop.create_task(background_멘션_task())
-        b.loop.create_task(background_입력_task())
-        b.loop.create_task(background_그룹_task())
-        b.loop.create_task(background_장애타_task())
-        b.loop.create_task(background_멘션타_task())
-
-    return b
-
-async def run_bot_instance(token):
-    b = create_bot()
-    await b.start(token)
-
-async def main():
-    tasks = [run_bot_instance(token) for token in TOKENS]
-    await asyncio.gather(*tasks)
+def run_single_bot(token):
+    try:
+        bot.run(token)
+    except Exception as e:
+        print(f"Bot error: {e}")
 
 if __name__ == '__main__':
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        pass
+    import multiprocessing
+    processes = []
+    for token in TOKENS:
+        p = multiprocessing.Process(target=run_single_bot, args=(token,))
+        p.start()
+        processes.append(p)
+    
+    for p in processes:
+        p.join()
