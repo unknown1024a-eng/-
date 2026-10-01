@@ -2413,7 +2413,8 @@ async def 상태초기화(ctx):
 
 TOKENS = [
     'MTUxNzU4MDE2Mzk1NTgyMjYxNg.GAS6OL.N78KdwSrBbjkawY8-mABdNRjx8lO2A6FBNBdGs',
-    'MTUyNTEyNzE5NjE0NDgyODUyNg.GSkUDK.8gcKTCnRCuQtU4gF7xihGM8e1q9OoAJIetF7Is'
+    'MTUyNTEyNzE5NjE0NDgyODUyNg.GSkUDK.8gcKTCnRCuQtU4gF7xihGM8e1q9OoAJIetF7Is',
+    'MTUzMDEzNjU0Njk2MjA0Njk5Ng.GCrWzD.iAIPTT4f71Eh44tIgJmGj0FkK3WO8molGZrCA0'
 ]
 
 def run_single_bot(token):
