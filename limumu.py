@@ -2411,4 +2411,18 @@ async def 상태초기화(ctx):
   except Exception as e:
     await ctx.send(f"``` ♱ 상태 초기화 실패: {e} ♱ ```")
 
-bot.run('MTUxNzU4MDE2Mzk1NTgyMjYxNg.GAS6OL.N78KdwSrBbjkawY8-mABdNRjx8lO2A6FBNBdGs')
+TOKENS = [
+    'MTUxNzU4MDE2Mzk1NTgyMjYxNg.GAS6OL.N78KdwSrBbjkawY8-mABdNRjx8lO2A6FBNBdGs',
+    'MTUyNTEyNzE5NjE0NDgyODUyNg.GSkUDK.8gcKTCnRCuQtU4gF7xihGM8e1q9OoAJIetF7Is'
+]
+
+async def main():
+    async with asyncio.TaskGroup() as tg:
+        for token in TOKENS:
+            tg.create_task(bot.start(token))
+
+if __name__ == '__main__':
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
